@@ -16,9 +16,7 @@ export default function HomePage() {
       </p>
      
       <div className="p-6">
-        <PrimaryButton onClick={() => alert("Start game!")}>
-          Start game
-        </PrimaryButton>
+      
         <QuizTester />
         <PrimaryButton onClick={handleStart}>Start game</PrimaryButton>
       </div>
