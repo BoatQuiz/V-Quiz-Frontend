@@ -20,3 +20,20 @@ export interface ApiResponse<T> {
 }
 
 export type StartQuizResponse = ApiResponse<StartQuizData>;
+
+export interface SubmitAnswerRequest {
+    sessionId: string;
+    questionId: string;
+    selectedAnswer: number;
+}
+
+export interface SubmitAnswerData {
+    IsCorrect: boolean;
+    CorrectIndex: number;
+    CorrectAnswer: string;
+    IsLastQuestion: boolean;
+    Score: number;
+    QuestionsAnswered: number;
+}
+
+export type SubmitAnswerResponse = ApiResponse<SubmitAnswerData>;
