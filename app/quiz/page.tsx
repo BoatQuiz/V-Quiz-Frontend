@@ -9,7 +9,7 @@ export default function QuizPage() {
   // Här sparar vi nuvarande fråga från API:t
   const [question, setQuestion] = useState<ApiQuestion | null>(null);
 
-  // Lite state för laddning / fel
+  // State för laddning / fel
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
