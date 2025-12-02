@@ -1,3 +1,7 @@
+"use client";
+import { PrimaryButton } from "@/app/components/ui/buttons/PrimaryButton";
+import QuizTester from "./components/QuizTester";
+
 export default function HomePage() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center gap-4">
@@ -5,9 +9,13 @@ export default function HomePage() {
       <p className="text-lg text-gray-600">
         Frågesport för vetting och säkerhet inom sjöfart.
       </p>
-      <p className="text-sm text-gray-500">
-        Hej
-      </p>
+      <p className="text-sm text-gray-500">Hej</p>
+      <div className="p-6">
+        <PrimaryButton onClick={() => alert("Start game!")}>
+          Start game
+        </PrimaryButton>
+        <QuizTester />
+      </div>
     </main>
   );
 }
