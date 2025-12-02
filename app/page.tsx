@@ -1,5 +1,6 @@
 "use client";
 import { PrimaryButton } from "@/app/components/ui/buttons/PrimaryButton";
+import QuizTester from "./components/QuizTester";
 
 export default function HomePage() {
   return (
@@ -13,6 +14,7 @@ export default function HomePage() {
         <PrimaryButton onClick={() => alert("Start game!")}>
           Start game
         </PrimaryButton>
+        <QuizTester />
       </div>
     </main>
   );
