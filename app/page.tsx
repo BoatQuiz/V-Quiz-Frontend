@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { PrimaryButton } from "@/app/components/ui/buttons/PrimaryButton";
+import QuizTester from "./components/QuizTester";
 
 export default function HomePage() {
   const router = useRouter();
@@ -15,6 +16,10 @@ export default function HomePage() {
       </p>
      
       <div className="p-6">
+        <PrimaryButton onClick={() => alert("Start game!")}>
+          Start game
+        </PrimaryButton>
+        <QuizTester />
         <PrimaryButton onClick={handleStart}>Start game</PrimaryButton>
       </div>
     </main>
