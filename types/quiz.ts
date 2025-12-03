@@ -8,7 +8,7 @@ export interface ApiSession {
     sessionId: string;
 }
 
-export interface StartQuizData {
+export interface QuizData {
     Question: ApiQuestion;
     Session: ApiSession;
 }
@@ -19,7 +19,7 @@ export interface ApiResponse<T> {
     Data: T | null;
 }
 
-export type StartQuizResponse = ApiResponse<StartQuizData>;
+export type QuizResponse = ApiResponse<QuizData>;
 
 export interface SubmitAnswerRequest {
     sessionId: string;
