@@ -1,10 +1,10 @@
 "use server";
 
 import { apiFetch } from "@/lib/apiClient";
-import { StartQuizResponse } from "@/types/quiz";
+import { QuizResponse } from "@/types/quiz";
 
-export async function StartQuizAction(): Promise<StartQuizResponse> {
-    return apiFetch<StartQuizResponse>("/quiz/start");
+export async function StartQuizAction(): Promise<QuizResponse> {
+    return apiFetch<QuizResponse>("/quiz/start");
 }
 
 
