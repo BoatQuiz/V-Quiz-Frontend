@@ -1,12 +1,12 @@
 'use client'
 
 import { SubmitAnswerAction } from "../actions/SubmitAnswerAction";
-import { GetNextQuestion } from "../actions/GetNextQuestion";
-import { FlagQuestion } from "../actions/FlagQuestion";
+import { GetNextQuestion } from "../actions/GetNextQuestionAction";
+import { FlagQuestion } from "../actions/FlagQuestionAction";
 
 export default function TestSubmitAnswer() {
     // Om du vill testa mot en annan session så starta ett quiz och ta den sessionId som kommer tillbaka så är det bara att klistra in den här under
-    const testSession = "9376bc3b-bc44-4e91-9a61-272a8f37031f"
+    const testSession = "c7017edf-7fad-42d4-b3d2-7167cc7937e3"
     // Här skickas in en PayLoad till Api den skall vi kunna få ut genom att ta info som kommer från frågan med ett sessionId och en QuestionId, Sedan behöver vi mappa vilket nummer som svaret ger. Den skall sedan skickas in och så kommer det tillbaka ett svar
 
     // Denna funktion funkar att köra 10 gånger per session innan session är fullt och man får ett fel meddelande
