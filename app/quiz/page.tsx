@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { QuestionCard } from "../components/quiz/QuestionCard";
 import { StartQuizAction } from "../actions/StartQuizAction";
-import type { ApiQuestion, StartQuizResponse } from "@/types/quiz";
+import type { ApiQuestion, QuizResponse } from "@/types/quiz";
 import TopBar from "../components/ui/TopBar";
 
 export default function QuizPage() {
@@ -17,7 +17,7 @@ export default function QuizPage() {
     useEffect(() => {
         async function load() {
             try {
-                const response: StartQuizResponse = await StartQuizAction();
+                const response: QuizResponse = await StartQuizAction();
                 console.log("StartQuizAction response:", response);
 
                 if (!response.Success || !response.Data) {
@@ -59,6 +59,7 @@ export default function QuizPage() {
                         <QuestionCard
                             question={question.QuestionText}
                             options={question.Options}
+                            questionId={question.QuestionId}
                             // Låtsas att rätt svar är alternativ 0 ska uppdateras sen
                             correctIndex={0}
                         />
