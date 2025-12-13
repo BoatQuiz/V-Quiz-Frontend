@@ -48,11 +48,11 @@ export default function Flagpage() {
         <div>
             <TopBar />
             <div className="border m-2.5 border-gray-Card-background rounded-xl p-2.5 flex flex-col gap-2.5">
-                <div className="border p-2.5 rounded-lg border-gray-Card-background bg-gray-Page-background text-center font-extrabold text-lg text-blue-Primary-button">
+                <div className="border p-2.5 rounded-lg border-gray-Card-background bg-gray-Page-background text-center font-medium text-sm ">
                     <p>{flagged?.question}</p>
                 </div>
                 <div className="w-full flex justify-center border border-gray-Card-background rounded-xl bg-gray-Page-background">
-                    <div className="p-2.5 rounded-lg text-center font-extrabold text-lg text-blue-Primary-button flex flex-col items-start">
+                    <div className="p-2.5 rounded-lg text-center font-medium text-sm  flex flex-col items-start">
                         {reason.map((r) => (
                             <label key={r.Key}>
                                 <input
