@@ -1,7 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  output: "export",
+
+  // (valfritt men rekommenderat för SWA)
+  images: {
+    unoptimized: true,
+  },
 };
 
 export default nextConfig;
