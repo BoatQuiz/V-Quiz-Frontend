@@ -3,6 +3,7 @@
 import { SubmitAnswerAction } from "../actions/SubmitAnswerAction";
 import { GetNextQuestion } from "../actions/GetNextQuestionAction";
 import { FlagQuestion } from "../actions/FlagQuestionAction";
+import { SendFlagRequest } from "@/types/flag";
 
 export default function TestSubmitAnswer() {
     // Om du vill testa mot en annan session så starta ett quiz och ta den sessionId som kommer tillbaka så är det bara att klistra in den här under
@@ -32,11 +33,12 @@ export default function TestSubmitAnswer() {
 
     // Om det är fel på en fråga skall man kunna använda denna, det som skickas in är frågeId, vem som skickar in eller null samt om det finns en kommentar eller null
     async function flagQuestion() {
-        const payload = {
-            QuestionId: "q5",
-            UserId: "Thomas",
-            Comment: "Detta är ett test",
-        };
+        const payload: SendFlagRequest = {
+    questionId: "q5",
+    reasons: ["wrong answer", "typo"],
+    userId: "Thomas",
+    comment: "Detta är ett test",
+  };
         console.log("Skickar", payload);
         const result = await FlagQuestion(payload)
         console.log("Api response", result);

@@ -1,10 +1,10 @@
 "use server";
 
 import { apiFetch } from "@/lib/apiClient";
-import { FlagRequest, FlagResponse } from "@/types/flag";
+import { SendFlagRequest, FlagResponse } from "@/types/flag";
 
 export async function FlagQuestion(
-    payload: FlagRequest
+    payload: SendFlagRequest
 ): Promise<FlagResponse> {
     return apiFetch<FlagResponse>("/flag/question", {
         method: "POST",
