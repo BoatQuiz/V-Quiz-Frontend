@@ -1,4 +1,4 @@
-import { FlagProvider } from "./context/flagContext";
+import { QuizProvider } from "./context/quizContext";
 import "./globals.css";
 import type { ReactNode } from "react";
 
@@ -11,7 +11,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <FlagProvider>{children}</FlagProvider>
+        <QuizProvider>{children}</QuizProvider>
       </body>
     </html>
   );

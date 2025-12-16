@@ -1,6 +1,6 @@
+import { useQuiz } from "@/app/context/quizContext";
 import Link from "next/link";
-import { useState } from "react";
-import { useFlag } from "@/app/context/flagContext";
+import { useEffect, useState } from "react";
 
 type QuestionCardProps = {
   question: string;
@@ -16,14 +16,19 @@ export function QuestionCard({
   questionId,
 }: QuestionCardProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const { setFlagged } = useFlag();
+  const { setCurrentQuestion } = useQuiz();
+
+  useEffect(() => {
+    setCurrentQuestion({
+      id: questionId,
+      text: question,
+    });
+    
+  }, [questionId, question, setCurrentQuestion]);
   return (
     <section className="space-y-3">
       <Link
         href="/flag"
-        onClick={() =>
-          setFlagged({ question, options, correctIndex, questionId })
-        }
       >
         klicka mig
       </Link>

@@ -1,16 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useFlag } from "../context/flagContext";
 import { GetFlagReason } from "../actions/GetFlagReason";
 import { FlagReason } from "@/types/flag";
 import { SendFlag } from "../actions/SendFlag";
 import { useRouter } from "next/navigation";
 import TopBar from "../components/ui/TopBar";
 import { PrimaryButton } from "../components/ui/buttons/PrimaryButton";
+import { useQuiz } from "../context/quizContext";
 
 export default function Flagpage() {
-    const { flagged } = useFlag();
+    const { currentQuestion } = useQuiz();
     const [loading, setLoading] = useState(false);
     const [reason, setReason] = useState<FlagReason[]>([]);
     const [selectReason, setSelectReason] = useState<string[]>([]);
@@ -32,9 +32,13 @@ export default function Flagpage() {
     }
 
     async function handleSubmit() {
+        if (!currentQuestion) {
+            console.error("Ingen aktuell fråga att flagga");
+            return
+        }
         setLoading(true);
         await SendFlag({
-            questionId: flagged!.questionId,
+            questionId: currentQuestion?.id,
             userId: null,
             comment: comment || null,
             reasons: selectReason,
@@ -43,13 +47,13 @@ export default function Flagpage() {
         router.push("/quiz");
     }
 
-    if (!flagged) return <p className="text-red-500">Ingen fråga att visa</p>;
+    if (!currentQuestion) return <p className="text-red-500">Ingen fråga att visa</p>;
     return (
         <div>
             <TopBar />
             <div className="border m-2.5 border-gray-Card-background rounded-xl p-2.5 flex flex-col gap-2.5">
                 <div className="border p-2.5 rounded-lg border-gray-Card-background bg-gray-Page-background text-center font-medium text-sm ">
-                    <p>{flagged?.question}</p>
+                    <p>{currentQuestion?.text}</p>
                 </div>
                 <div className="w-full flex justify-center border border-gray-Card-background rounded-xl bg-gray-Page-background">
                     <div className="p-2.5 rounded-lg text-center font-medium text-sm  flex flex-col items-start">
