@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   //output: "export",
   // (valfritt men rekommenderat för SWA)
   // images: {
-  //   unoptimized: true,
+  //   unoptimized: true,y
   // },
   reactStrictMode: true
 };
