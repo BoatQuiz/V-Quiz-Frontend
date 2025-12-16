@@ -1,6 +1,7 @@
 type QuizSession = { 
     id: string;
-    numCorrectAnswers: number; 
+    score: number; 
+    numUsedQuestions: number;
 }
 
 type QuizQuestionMeta = {

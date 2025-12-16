@@ -1,6 +1,9 @@
-import React from "react";
+import { useQuiz } from "@/app/context/quizContext";
+
 
 export default function TopBar() {
+    const { session} = useQuiz()
+    console.log(session)
     return (
         <div className="bg-white-Card-background border border-gray-Card-background p-2.5 m-2.5 rounded-xl flex flex-col gap-2.5">
             <div>
@@ -14,12 +17,13 @@ export default function TopBar() {
             <div className="flex gap-2.5 justify-center">
                 <div className="bg-gray-Page-background border border-gray-Card-background rounded-lg text-center p-2.5 flex-1">
                     <h2 className="font-extrabold text-blue-Primary-button text-base">
-                        12
+                        {session?.numUsedQuestions}
                     </h2>
                     <p className="font-normal text-xs text-gray-Body-text">
-                        Completed
+                        Completed questions
                     </p>
                 </div>
+                {/* Denna skall byggas om och visa vilken procent rätt man har men görs i backend */}
                 <div className="bg-gray-Page-background border border-gray-Card-background rounded-lg text-center p-2.5 flex-1">
                     <h2 className="font-extrabold text-blue-Primary-button text-base">
                         87%
@@ -30,12 +34,13 @@ export default function TopBar() {
                 </div>
                 <div className="bg-gray-Page-background border border-gray-Card-background rounded-lg text-center p-2.5 flex-1">
                     <h2 className="font-extrabold text-blue-Primary-button text-base">
-                        32
+                        {session?.score}
                     </h2>
                     <p className="font-normal text-xs text-gray-Body-text">
-                        Streak
+                        Correct Answers
                     </p>
                 </div>
+                {/* Borde denna bytas ut mot något mer lämpligt */}
                 <div className="bg-gray-Page-background border border-gray-Card-background rounded-lg text-center p-2.5 flex-1">
                     <h2 className="font-extrabold text-blue-Primary-button text-base">
                         1

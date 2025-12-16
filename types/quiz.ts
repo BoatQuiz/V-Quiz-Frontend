@@ -5,7 +5,13 @@ export interface ApiQuestion {
 }
 
 export interface ApiSession {
-    sessionId: string;
+    SessionId: string;
+    Score: number;
+    NumUsedQuestions: number;
+}
+
+export interface ApiSessionRequest {
+    SessionId: string;
 }
 
 export interface QuizData {
