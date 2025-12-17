@@ -1,10 +1,10 @@
 "use server";
 
 import { apiFetch } from "@/lib/apiClient";
-import { ApiSession, QuizResponse } from "@/types/quiz";
+import { ApiSessionRequest, QuizResponse } from "@/types/quiz";
 
 export async function GetNextQuestion(
-    payload: ApiSession
+    payload: ApiSessionRequest
 ): Promise<QuizResponse> {
     return apiFetch<QuizResponse>("/quiz/getNextQuestion", {
         method: "POST",

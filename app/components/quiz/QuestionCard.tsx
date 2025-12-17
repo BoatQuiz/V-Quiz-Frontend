@@ -1,31 +1,23 @@
 import Link from "next/link";
-import { useState } from "react";
-import { useFlag } from "@/app/context/flagContext";
+import { useEffect, useState } from "react";
 
 type QuestionCardProps = {
   question: string;
   options: string[];
   correctIndex: number;
-  questionId: string;
 };
 
 export function QuestionCard({
   question,
   options,
   correctIndex,
-  questionId,
 }: QuestionCardProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const { setFlagged } = useFlag();
+
   return (
     <section className="space-y-3">
-      <Link
-        href="/flag"
-        onClick={() =>
-          setFlagged({ question, options, correctIndex, questionId })
-        }
-      >
-        klicka mig
+      <Link href="/flag" aria-label="Rapportera fel">
+        <span className="text-xl hover:opacity-70">🚩</span>
       </Link>
 
       <p className="font-medium text-gray-900 text-center">{question}</p>
