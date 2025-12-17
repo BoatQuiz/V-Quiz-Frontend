@@ -34,6 +34,9 @@ export default function TestSubmitAnswer() {
   }, []);
 
   // Om du vill testa mot en annan session så starta ett quiz och ta den sessionId som kommer tillbaka så är det bara att klistra in den här under
+  if (!session) {
+    return <div>Laddar session...</div>;
+  }
   const testSession = session?.id;
   console.log("Använder session:", testSession);
   // Här skickas in en PayLoad till Api den skall vi kunna få ut genom att ta info som kommer från frågan med ett sessionId och en QuestionId, Sedan behöver vi mappa vilket nummer som svaret ger. Den skall sedan skickas in och så kommer det tillbaka ett svar
