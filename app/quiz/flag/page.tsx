@@ -50,8 +50,7 @@ export default function Flagpage() {
     if (!currentQuestion) return <p className="text-red-500">Ingen fråga att visa</p>;
     return (
         <div>
-            <TopBar />
-            <div className="border m-2.5 border-gray-Card-background rounded-xl p-2.5 flex flex-col gap-2.5">
+            <div className="border bg-white-Card-background border-gray-Card-background rounded-xl p-2.5 flex flex-col gap-2.5">
                 <div className="border p-2.5 rounded-lg border-gray-Card-background bg-gray-Page-background text-center font-medium text-sm ">
                     <p>{currentQuestion?.text}</p>
                 </div>
