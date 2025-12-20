@@ -5,7 +5,6 @@ import { GetFlagReason } from "../../actions/GetFlagReason";
 import { FlagReason } from "@/types/flag";
 import { SendFlag } from "../../actions/SendFlag";
 import { useRouter } from "next/navigation";
-import TopBar from "../../components/ui/TopBar";
 import { PrimaryButton } from "../../components/ui/buttons/PrimaryButton";
 import { useQuiz } from "../../context/quizContext";
 

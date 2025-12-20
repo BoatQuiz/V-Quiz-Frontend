@@ -3,7 +3,6 @@ import { useQuiz } from "@/app/context/quizContext";
 
 export default function TopBar() {
     const { session} = useQuiz()
-    console.log(session)
     return (
         <div className="bg-white-Card-background border border-gray-Card-background p-2.5 rounded-xl flex flex-col gap-2.5">
             <div>
