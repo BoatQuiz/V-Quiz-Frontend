@@ -16,7 +16,7 @@ export function QuestionCard({
 
   return (
     <section className="space-y-3">
-      <Link href="/flag" aria-label="Rapportera fel">
+      <Link href="/quiz/flag" aria-label="Rapportera fel">
         <span className="text-xl hover:opacity-70">🚩</span>
       </Link>
 
