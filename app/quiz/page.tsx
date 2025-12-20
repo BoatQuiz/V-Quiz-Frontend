@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { QuestionCard } from "../components/quiz/QuestionCard";
 import { StartQuizAction } from "../actions/StartQuizAction";
 import type { ApiQuestion, QuizResponse } from "@/types/quiz";
-import TopBar from "../components/ui/TopBar";
 import { useQuiz } from "../context/quizContext";
 
 export default function QuizPage() {
@@ -49,10 +48,9 @@ export default function QuizPage() {
   }, []);
 
   return (
-    <div className="flex flex-col ">
-      <TopBar />
-      <main className="min-h-screen flex flex-col items-center justify-center bg-gray-Page-background">
-        <div className="w-[390px] rounded-3xl bg-white shadow-md p-6 space-y-4">
+    <div className="flex flex-col">
+      <main className="sm:min-h-screen flex flex-col items-center justify-center bg-gray-Page-background">
+        <div className="sm:w-[390px] rounded-3xl bg-white-Card-background shadow-md p-6 space-y-4">
           <h1 className="text-xl font-semibold text-center">Quiz</h1>
 
           {loading && (

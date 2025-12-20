@@ -5,7 +5,7 @@ export default function TopBar() {
     const { session} = useQuiz()
     console.log(session)
     return (
-        <div className="bg-white-Card-background border border-gray-Card-background p-2.5 m-2.5 rounded-xl flex flex-col gap-2.5">
+        <div className="bg-white-Card-background border border-gray-Card-background p-2.5 rounded-xl flex flex-col gap-2.5">
             <div>
                 <h1 className="font-bold text-sm text-gray-Heading-text">
                     Welcome back Kapten Zoom
@@ -41,14 +41,14 @@ export default function TopBar() {
                     </p>
                 </div>
                 {/* Borde denna bytas ut mot något mer lämpligt */}
-                <div className="bg-gray-Page-background border border-gray-Card-background rounded-lg text-center p-2.5 flex-1">
+                {/* <div className="bg-gray-Page-background border border-gray-Card-background rounded-lg text-center p-2.5 flex-1">
                     <h2 className="font-extrabold text-blue-Primary-button text-base">
                         1
                     </h2>
                     <p className="font-normal text-xs text-gray-Body-text">
                         Place
                     </p>
-                </div>
+                </div> */}
             </div>
         </div>
     );
