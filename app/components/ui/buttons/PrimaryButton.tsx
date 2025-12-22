@@ -12,7 +12,7 @@ export function PrimaryButton({ children, className = "", ...props }: PrimaryBut
     <button
       {...props}
       className={
-        "w-auto h-[47px] rounded-xl bg-blue-Primary-button text-white font-medium " +
+        "w-full h-[47px] rounded-xl bg-blue-Primary-button text-white font-medium " +
         "flex items-center justify-center shadow-md " +
         "hover:bg-[#182e6e] active:translate-y-px transition " +
         className
