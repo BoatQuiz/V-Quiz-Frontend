@@ -1,30 +1,37 @@
 "use client";
 
-import { SubmitHandler, useForm } from "react-hook-form";
+//import { SubmitHandler, useForm } from "react-hook-form";
 import { PrimaryButton } from "../components/ui/buttons/PrimaryButton";
-import { FormValues } from "@/types/login";
+//import { FormValues } from "@/types/login";
+import { Login } from "../actions/LoginAction";
 
 export default function LoginPage() {
-    const { handleSubmit, register } = useForm<FormValues>();
-    const onSubmit: SubmitHandler<FormValues> = (data) => console.log(data)
+    // const { handleSubmit, register } = useForm<FormValues>();
+    // const onSubmit: SubmitHandler<FormValues> = async (data) => 
+    //     {
+    //         console.log(data)
+    //         Login(data)
+    //     }
 
     
     return (
         <div className="bg-white-Card-background flex flex-col text-center">
             <div className="bg-gray-Card-background m-3 rounded-xl border border-gray-Input-border">
-                <form className="flex flex-col p-3 gap-2.5" onSubmit={handleSubmit(onSubmit)}>
+                <form action={Login} className="flex flex-col p-3 gap-2.5" >
                     <h1 className="font-bold text-2xl">Sign In</h1>
                     <input
                         type="text"
+                        name="username"
                         className="border border-gray-Input-border p-2.5 bg-white-Card-background rounded-xl text-gray-Placeholder-text"
                         placeholder="Username"
-                        {...register("username")}
+                        //{...register("username")}
                     />
                     <input
                         type="password"
+                        name="password"
                         className="border border-gray-Input-border p-2.5 bg-white-Card-background rounded-xl text-gray-Placeholder-text"
                         placeholder="Password"
-                        {...register("password")}
+                        //{...register("password")}
                     />
                     <div className="flex justify-between p-1">
                         <div className="flex gap-2.5">
