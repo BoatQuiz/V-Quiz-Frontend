@@ -6,15 +6,15 @@ import { cookies } from "next/headers";
 import { ApiResponse } from "@/types/quiz";
 import { LoginUserDto } from "@/types/login";
 
-export async function Login(formData: FormData): Promise<void> {
-    const username = formData.get("username")?.toString() ?? "";
-    const password = formData.get("password")?.toString() ?? "";
-
+export async function Login(data: {
+    username: string;
+    password: string;
+}): Promise<void> {
     const response = await apiFetch<ApiResponse<LoginUserDto>>("/user/login", {
         method: "POST",
-        body: JSON.stringify({ 
-            Username: username, 
-            Password: password 
+        body: JSON.stringify({
+            Username: data.username,
+            Password: data.password,
         }),
         headers: {
             "Content-Type": "application/json",
