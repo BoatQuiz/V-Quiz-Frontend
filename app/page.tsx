@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { PrimaryButton } from "@/app/components/ui/buttons/PrimaryButton";
+import Link from "next/link";
 
 export default function HomePage() {
   const router = useRouter();
@@ -17,6 +18,12 @@ export default function HomePage() {
       <div className="w-full">
         <PrimaryButton onClick={handleStart}>Start game</PrimaryButton>
       </div>
+      <Link
+        href="/login"
+        className="text-sm text-gray-500 hover:underline"
+      >
+        Logga in
+      </Link>
     </main>
   );
 }
