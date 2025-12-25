@@ -3,29 +3,33 @@
 import { apiFetch } from "@/lib/apiClient";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-
-type LoginResponse = {
-    userId : string;
-    username : string;
-}
+import { ApiResponse } from "@/types/quiz";
+import { LoginUserDto } from "@/types/login";
 
 export async function Login(formData: FormData): Promise<void> {
-    const Username = formData.get("username")?.toString() ?? "";
-    const Password = formData.get("password")?.toString() ?? "";
-    console.log("Från formAction: ", { Username, Password });
-    const response = await apiFetch<LoginResponse>("/user/login", {
+    const username = formData.get("username")?.toString() ?? "";
+    const password = formData.get("password")?.toString() ?? "";
+
+    const response = await apiFetch<ApiResponse<LoginUserDto>>("/user/login", {
         method: "POST",
-        body: JSON.stringify({ Username, Password }),
+        body: JSON.stringify({ 
+            Username: username, 
+            Password: password 
+        }),
         headers: {
             "Content-Type": "application/json",
         },
     });
 
-    const { userId, username: name } = response;
+    if (!response.Success || !response.Data) {
+        throw new Error(response.Message ?? "Login failed");
+    }
+
+    const { Id, Username } = response.Data;
 
     (await cookies()).set(
         "user_identity",
-        JSON.stringify({ userId, username: name }),
+        JSON.stringify({ userId: Id, username: Username }),
         { path: "/" }
     );
     redirect("/quiz");
