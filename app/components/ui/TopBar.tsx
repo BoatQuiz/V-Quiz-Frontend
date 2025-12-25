@@ -1,13 +1,15 @@
+'use client'
+
 import { useQuiz } from "@/app/context/quizContext";
 
 
 export default function TopBar() {
-    const { session} = useQuiz()
+    const { session, username} = useQuiz()
     return (
         <div className="bg-white-Card-background border border-gray-Card-background p-2.5 rounded-xl flex flex-col gap-2.5">
             <div>
                 <h1 className="font-bold text-sm text-gray-Heading-text">
-                    Welcome back Kapten Zoom
+                    Welcome back {username ?? "Captain"}
                 </h1>
                 <p className="text-xs font-normal text-gray-Body-text">
                     Good work keep it going!

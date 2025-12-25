@@ -1,19 +1,10 @@
 "use client";
 
-//import { SubmitHandler, useForm } from "react-hook-form";
 import { PrimaryButton } from "../components/ui/buttons/PrimaryButton";
-//import { FormValues } from "@/types/login";
 import { Login } from "../actions/LoginAction";
+import Link from "next/link";
 
 export default function LoginPage() {
-    // const { handleSubmit, register } = useForm<FormValues>();
-    // const onSubmit: SubmitHandler<FormValues> = async (data) => 
-    //     {
-    //         console.log(data)
-    //         Login(data)
-    //     }
-
-    
     return (
         <div className="bg-white-Card-background flex flex-col text-center">
             <div className="bg-gray-Card-background m-3 rounded-xl border border-gray-Input-border">
@@ -52,7 +43,10 @@ export default function LoginPage() {
                 </form>
             </div>
             <p className="text-gray-Placeholder-text">
+                <Link href="/quiz">
+                
                 Continue without signing in
+                </Link>
             </p>
         </div>
     );
