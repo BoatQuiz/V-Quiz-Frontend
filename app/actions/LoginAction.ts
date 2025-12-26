@@ -4,12 +4,12 @@ import { apiFetch } from "@/lib/apiClient";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { ApiResponse } from "@/types/quiz";
-import { LoginUserDto } from "@/types/login";
+import { LoginResult, LoginUserDto } from "@/types/login";
 
 export async function Login(data: {
     username: string;
     password: string;
-}): Promise<void> {
+}): Promise<LoginResult> {
     const response = await apiFetch<ApiResponse<LoginUserDto>>("/user/login", {
         method: "POST",
         body: JSON.stringify({
@@ -22,7 +22,10 @@ export async function Login(data: {
     });
 
     if (!response.Success || !response.Data) {
-        throw new Error(response.Message ?? "Login failed");
+        return {
+            success: false,
+            message: response.Message || "Login failed",
+        };
     }
 
     const { Id, Username } = response.Data;

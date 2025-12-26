@@ -12,3 +12,7 @@ export interface RegisterUserDto {
     Id: string;
     Username: string;
 }
+
+export type LoginResult =
+  | { success: true }
+  | { success: false; message: string };

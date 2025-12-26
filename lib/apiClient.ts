@@ -14,10 +14,12 @@ export async function apiFetch<TResponse>(
         cache: "no-store",
     });
 
-    if (!res.ok) {
-        const text = await res.text();
-        throw new Error(`API Error ${res.status}: ${text}`);
+    const text = await res.text();
+    const data = text ? JSON.parse(text) : null;
+
+    if (!res.ok && res.status >= 500) {
+        throw new Error(`API Error ${res.status}`);
     }
 
-    return res.json() as Promise<TResponse>;
+    return data as TResponse;
 }
