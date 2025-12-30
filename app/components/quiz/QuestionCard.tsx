@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useState } from "react";
 
 type QuestionCardProps = {
@@ -16,10 +15,6 @@ export function QuestionCard({
 
   return (
     <section className="space-y-3">
-      <Link href="/quiz/flag" aria-label="Rapportera fel">
-        <span className="text-xl hover:opacity-70">🚩</span>
-      </Link>
-
       <p className="font-medium text-gray-900 text-center">{question}</p>
 
       <div className="space-y-3 mt-4">
