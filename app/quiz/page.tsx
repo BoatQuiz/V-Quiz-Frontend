@@ -5,11 +5,12 @@ import { QuestionCard } from "../components/quiz/QuestionCard";
 import { StartQuizAction } from "../actions/StartQuizAction";
 import type { ApiQuestion, QuizResponse } from "@/types/quiz";
 import { useQuiz } from "../context/quizContext";
+import Link from "next/link";
 
 export default function QuizPage() {
   // Här sparar vi nuvarande fråga från API:t
   const [question, setQuestion] = useState<ApiQuestion | null>(null);
-  const {setSession, setCurrentQuestion} = useQuiz();
+  const { setSession, setCurrentQuestion } = useQuiz();
   // State för laddning / fel
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -27,7 +28,7 @@ export default function QuizPage() {
         setSession({
           id: response.Data.Session.SessionId,
           score: response.Data.Session.Score,
-          numUsedQuestions: response.Data.Session.NumUsedQuestions
+          numUsedQuestions: response.Data.Session.NumUsedQuestions,
         });
         setCurrentQuestion({
           id: response.Data.Question.QuestionId,
@@ -51,7 +52,15 @@ export default function QuizPage() {
     <div className="flex flex-col">
       <main className="sm:min-h-screen flex flex-col items-center justify-center bg-gray-Page-background">
         <div className="sm:w-[390px] rounded-3xl bg-white-Card-background shadow-md p-6 space-y-4">
-          <h1 className="text-xl font-semibold text-center">Quiz</h1>
+          <div className="grid grid-cols-[24px_1fr_24px] items-center">
+            <div />
+            <h1 className="text-xl font-semibold text-center">Quiz</h1>
+            <Link href="/quiz/flag" aria-label="Rapportera fel">
+              <span className="text-xl hover:opacity-70 flex justify-start">
+                🚩
+              </span>
+            </Link>
+          </div>
 
           {loading && (
             <p className="text-sm text-gray-500 text-center">Laddar fråga…</p>
