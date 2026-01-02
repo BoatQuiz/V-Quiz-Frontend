@@ -44,7 +44,8 @@ export default function LoginPage() {
             className="border border-gray-Input-border p-2.5 bg-white-Card-background rounded-xl text-gray-Placeholder-text"
             placeholder="Password"
           />
-          <div className="flex justify-between p-1">
+          {/* När tiden är mogen skall denna läggas in igen, men först när vi kopplat det mot en e-post */}
+          {/* <div className="flex justify-between p-1">
             <div className="flex gap-2.5">
               <input type="checkbox" />
               <label htmlFor="checkbox">Remember me</label>
@@ -52,7 +53,7 @@ export default function LoginPage() {
             <span className="text-blue-600 underline cursor-pointer hover:text-blue-700">
               Forgot password?
             </span>
-          </div>
+          </div> */}
           {error && <p className="text-red-600">{error}</p>}
           <PrimaryButton type="submit">Sign In</PrimaryButton>
           <p className="text-sm text-gray-600">
