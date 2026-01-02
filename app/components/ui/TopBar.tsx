@@ -16,7 +16,7 @@ export default function TopBar() {
                         Good work keep it going!
                     </p>
                 </div>
-                <LogoutButton className="px-3 h-8 text-xs"/>
+                {username && <LogoutButton className="px-3 h-8 text-xs" />}
             </div>
             <div className="flex gap-2.5 justify-center">
                 <div className="bg-gray-Page-background border border-gray-Card-background rounded-lg text-center p-2.5 flex-1">
