@@ -21,4 +21,6 @@ type QuizContextType = {
 
     username: string | null;
     setUsername: (name: string | null) => void;
+
+    logout: () => void;
 };
