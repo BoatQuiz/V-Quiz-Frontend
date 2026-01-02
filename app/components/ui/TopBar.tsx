@@ -1,19 +1,22 @@
-'use client'
+"use client";
 
 import { useQuiz } from "@/app/context/quizContext";
-
+import { LogoutButton } from "./buttons/LogoutButton";
 
 export default function TopBar() {
-    const { session, username} = useQuiz()
+    const { session, username } = useQuiz();
     return (
         <div className="bg-white-Card-background border border-gray-Card-background p-2.5 rounded-xl flex flex-col gap-2.5">
-            <div>
-                <h1 className="font-bold text-sm text-gray-Heading-text">
-                    Welcome back {username ?? "Captain"}
-                </h1>
-                <p className="text-xs font-normal text-gray-Body-text">
-                    Good work keep it going!
-                </p>
+            <div className="flex items-start justify-between gap-2">
+                <div>
+                    <h1 className="font-bold text-sm text-gray-Heading-text">
+                        Welcome back {username ?? "Captain"}
+                    </h1>
+                    <p className="text-xs font-normal text-gray-Body-text">
+                        Good work keep it going!
+                    </p>
+                </div>
+                <LogoutButton className="px-3 h-8 text-xs"/>
             </div>
             <div className="flex gap-2.5 justify-center">
                 <div className="bg-gray-Page-background border border-gray-Card-background rounded-lg text-center p-2.5 flex-1">
@@ -25,14 +28,14 @@ export default function TopBar() {
                     </p>
                 </div>
                 {/* Denna skall byggas om och visa vilken procent rätt man har men görs i backend */}
-                <div className="bg-gray-Page-background border border-gray-Card-background rounded-lg text-center p-2.5 flex-1">
+                {/* <div className="bg-gray-Page-background border border-gray-Card-background rounded-lg text-center p-2.5 flex-1">
                     <h2 className="font-extrabold text-blue-Primary-button text-base">
                         87%
                     </h2>
                     <p className="font-normal text-xs text-gray-Body-text whitespace-nowrap">
                         Average Score
                     </p>
-                </div>
+                </div> */}
                 <div className="bg-gray-Page-background border border-gray-Card-background rounded-lg text-center p-2.5 flex-1">
                     <h2 className="font-extrabold text-blue-Primary-button text-base">
                         {session?.score}
