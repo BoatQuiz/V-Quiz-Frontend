@@ -3,15 +3,19 @@ import { useState } from "react";
 type QuestionCardProps = {
   question: string;
   options: string[];
-  correctIndex: number;
+  correctIndex: number | null;
+  onAnswer: (selectedIndex: number) => void;
 };
 
 export function QuestionCard({
   question,
   options,
   correctIndex,
+  onAnswer,
 }: QuestionCardProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+  const locked = selectedIndex !== null; //Lås efter första klicket
 
   return (
     <section className="space-y-3">
@@ -20,35 +24,35 @@ export function QuestionCard({
       <div className="space-y-3 mt-4">
         {options.map((option, index) => {
           const isSelected = selectedIndex === index;
-          const isCorrect = index === correctIndex;
+          const isCorrect = correctIndex !== null && index === correctIndex;
 
           const baseClasses =
             "w-full rounded-2xl border px-4 py-3 text-center text-sm font-medium bg-white transition transform";
 
           let stateClasses = " border-gray-200 hover:bg-slate-50";
 
-          // Bara efter att användaren valt något
-          if (selectedIndex !== null) {
+          // När användaren valt något (då har vi selectedIndex)
+          if (selectedIndex !== null && correctIndex !== null) {
             if (isSelected && isCorrect) {
-              // Du har valt rätt svar
               stateClasses = " border-green-500 bg-green-50 scale-[1.02]";
             } else if (isSelected && !isCorrect) {
-              // Du har valt fel svar
               stateClasses = " border-red-500 bg-red-50 scale-[1.02]";
             } else if (!isSelected && isCorrect) {
-              // Det här är rätt svar, men du klickade någon annan
               stateClasses = " border-green-300 bg-green-50/40";
             } else {
-              // Övriga svar efter klick → tona ned lite
               stateClasses = " border-gray-200 bg-white opacity-80";
             }
           }
 
           return (
             <button
-              key={option}
+              key={`${index}-${option}`}
               type="button"
-              onClick={() => setSelectedIndex(index)}
+              disabled={locked} // lås efter första klicket
+              onClick={() => {
+                setSelectedIndex(index);
+                onAnswer(index); // Skickar till API
+              }}
               className={baseClasses + stateClasses}
             >
               {option}

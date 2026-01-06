@@ -6,14 +6,16 @@ import { StartQuizAction } from "../actions/StartQuizAction";
 import type { ApiQuestion, QuizResponse } from "@/types/quiz";
 import { useQuiz } from "../context/quizContext";
 import Link from "next/link";
+import { SubmitAnswerAction } from "../actions/SubmitAnswerAction";
 
 export default function QuizPage() {
   // Här sparar vi nuvarande fråga från API:t
   const [question, setQuestion] = useState<ApiQuestion | null>(null);
-  const { setSession, setCurrentQuestion } = useQuiz();
+  const { session, setSession, setCurrentQuestion } = useQuiz();
   // State för laddning / fel
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [correctIndex, setCorrectIndex] = useState<number | null>(null);
 
   useEffect(() => {
     async function load() {
@@ -37,6 +39,7 @@ export default function QuizPage() {
 
         // Plocka ut själva frågan från svaret
         setQuestion(response.Data.Question);
+        setCorrectIndex(null);
       } catch (err) {
         console.error("Error loading quiz question", err);
         setError("Kunde inte hämta första frågan just nu.");
@@ -46,7 +49,26 @@ export default function QuizPage() {
     }
 
     load();
-  }, []);
+  }, [setSession, setCurrentQuestion]);
+
+  async function handleAnswer(selectedIndex: number) {
+    if (!question || !session) return;
+    if (correctIndex !== null) return;
+
+    const payload = {
+      sessionId: session.id,
+      questionId: question.QuestionId,
+      selectedAnswer: selectedIndex,
+    };
+
+    const result = await SubmitAnswerAction(payload);
+    console.log("SubmitAnswer response:", result);
+
+    const apiCorrectIndex = result?.Data?.CorrectIndex;
+    if (typeof apiCorrectIndex === "number") {
+      setCorrectIndex(apiCorrectIndex);
+    }
+  }
 
   return (
     <div className="flex flex-col">
@@ -69,10 +91,11 @@ export default function QuizPage() {
           {error && <p className="text-sm text-red-600 text-center">{error}</p>}
           {!loading && !error && question && (
             <QuestionCard
+              key={question.QuestionId}
               question={question.QuestionText}
               options={question.Options}
-              // Låtsas att rätt svar är alternativ 0 ska uppdateras sen
-              correctIndex={0}
+              correctIndex={correctIndex} //null tills man svarat
+              onAnswer={handleAnswer} //när användaren klickat i ett svar
             />
           )}
         </div>
