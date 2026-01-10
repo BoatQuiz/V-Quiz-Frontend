@@ -6,16 +6,17 @@ import { FlagQuestion } from "../../actions/FlagQuestionAction";
 import { SendFlagRequest } from "@/types/flag";
 import TopBar from "../../components/ui/TopBar";
 import { useQuiz } from "../../context/quizContext";
-import { use, useEffect } from "react";
+import { useEffect } from "react";
 import { StartQuizAction } from "../../actions/StartQuizAction";
-import { set } from "react-hook-form";
+
 
 export default function TestSubmitAnswer() {
-  const { session, setSession, setCurrentQuestion } = useQuiz();
+  const { session, setSession, setCurrentQuestion, userId } = useQuiz();
 
   useEffect(() => {
     async function initializeSession() {
-      const result = await StartQuizAction();
+      const payload = { UserId: userId}
+      const result = await StartQuizAction(payload);
       if (!result.Success || !result.Data) {
         console.error("Failed to start quiz session");
         return;
@@ -72,7 +73,7 @@ export default function TestSubmitAnswer() {
     const payload: SendFlagRequest = {
       questionId: "q5",
       reasons: ["wrong answer", "typo"],
-      userId: "Thomas",
+      sessionId: testSession,
       comment: "Detta är ett test",
     };
     console.log("Skickar", payload);
