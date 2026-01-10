@@ -7,6 +7,7 @@ import type { ApiQuestion, QuizResponse } from "@/types/quiz";
 import { useQuiz } from "../context/quizContext";
 import Link from "next/link";
 import { SubmitAnswerAction } from "../actions/SubmitAnswerAction";
+import { GetNextQuestion } from "../actions/GetNextQuestionAction";
 
 export default function QuizPage() {
   // Här sparar vi nuvarande fråga från API:t
@@ -50,37 +51,63 @@ export default function QuizPage() {
 
     load();
   }, [setSession, setCurrentQuestion]);
+  
+  async function loadNextQuestion(sessionId: string) {
+  const payload = { SessionId: sessionId };
+  const result = await GetNextQuestion(payload);
+  console.log("GetNextQuestion response:", result);
 
-  async function handleAnswer(selectedIndex: number) {
-    if (!question || !session) return;
-    if (correctIndex !== null) return;
+  if (!result?.Success || !result?.Data) return;
 
-    const payload = {
-      sessionId: session.id,
-      questionId: question.QuestionId,
-      selectedAnswer: selectedIndex,
-    };
+  setSession({
+    id: result.Data.Session.SessionId,
+    score: result.Data.Session.Score,
+    numUsedQuestions: result.Data.Session.NumUsedQuestions,
+  });
 
-    const result = await SubmitAnswerAction(payload);
-    console.log("SubmitAnswer response:", result);
+  setCurrentQuestion({
+    id: result.Data.Question.QuestionId,
+    text: result.Data.Question.QuestionText,
+  });
 
-    const apiCorrectIndex = result?.Data?.CorrectIndex;
-    if (typeof apiCorrectIndex === "number") {
-      setCorrectIndex(apiCorrectIndex);
-    }
+  setQuestion(result.Data.Question);
+  setCorrectIndex(null);
+}
+async function handleAnswer(selectedIndex: number) {
+  if (!question || !session) return;
+  if (correctIndex !== null) return;
+
+  const payload = {
+    sessionId: session.id,
+    questionId: question.QuestionId,
+    selectedAnswer: selectedIndex,
+  };
+
+  const result = await SubmitAnswerAction(payload);
+  console.log("SubmitAnswer response:", result);
+
+  const apiCorrectIndex = result?.Data?.CorrectIndex;
+
+  if (typeof apiCorrectIndex === "number") {
+    setCorrectIndex(apiCorrectIndex);
+
+    const sessionId = session.id; 
+    setTimeout(() => {
+      loadNextQuestion(sessionId);
+    }, 1200);
   }
+}
 
   return (
-    <div className="flex flex-col">
-      <main className="sm:min-h-screen flex flex-col items-center justify-center bg-gray-Page-background">
-        <div className="sm:w-[390px] rounded-3xl bg-white-Card-background shadow-md p-6 space-y-4">
+  <div className="flex flex-col">
+    <main className="min-h-svh bg-gray-Page-background px-4 py-6">
+      <div className="mx-auto w-full max-w-[420px] md:max-w-[520px]">
+        <div className="rounded-3xl bg-white-Card-background shadow-md p-4 sm:p-6 space-y-4">
           <div className="grid grid-cols-[24px_1fr_24px] items-center">
             <div />
             <h1 className="text-xl font-semibold text-center">Quiz</h1>
             <Link href="/quiz/flag" aria-label="Rapportera fel">
-              <span className="text-xl hover:opacity-70 flex justify-start">
-                🚩
-              </span>
+              <span className="text-xl hover:opacity-70 flex justify-start">🚩</span>
             </Link>
           </div>
 
@@ -89,17 +116,19 @@ export default function QuizPage() {
           )}
 
           {error && <p className="text-sm text-red-600 text-center">{error}</p>}
+
           {!loading && !error && question && (
             <QuestionCard
               key={question.QuestionId}
               question={question.QuestionText}
               options={question.Options}
-              correctIndex={correctIndex} //null tills man svarat
-              onAnswer={handleAnswer} //när användaren klickat i ett svar
+              correctIndex={correctIndex}
+              onAnswer={handleAnswer}
             />
           )}
         </div>
-      </main>
-    </div>
-  );
+      </div>
+    </main>
+  </div>
+);
 }
