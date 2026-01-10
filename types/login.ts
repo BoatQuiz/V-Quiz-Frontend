@@ -14,5 +14,9 @@ export interface RegisterUserDto {
 }
 
 export type LoginResult =
-  | { success: true }
-  | { success: false; message: string };
+    | { success: true }
+    | { success: false; message: string };
+
+export interface UserId {
+    UserId: string | null;
+}

@@ -12,7 +12,7 @@ import { GetNextQuestion } from "../actions/GetNextQuestionAction";
 export default function QuizPage() {
   // Här sparar vi nuvarande fråga från API:t
   const [question, setQuestion] = useState<ApiQuestion | null>(null);
-  const { session, setSession, setCurrentQuestion } = useQuiz();
+  const { session, setSession, setCurrentQuestion, userId } = useQuiz();
   // State för laddning / fel
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -20,8 +20,9 @@ export default function QuizPage() {
 
   useEffect(() => {
     async function load() {
+      const payload = { UserId: userId}
       try {
-        const response: QuizResponse = await StartQuizAction();
+        const response: QuizResponse = await StartQuizAction(payload);
         console.log("StartQuizAction response:", response);
 
         if (!response.Success || !response.Data) {
@@ -50,7 +51,7 @@ export default function QuizPage() {
     }
 
     load();
-  }, [setSession, setCurrentQuestion]);
+  }, [setSession, setCurrentQuestion, userId]);
   
   async function loadNextQuestion(sessionId: string) {
   const payload = { SessionId: sessionId };
