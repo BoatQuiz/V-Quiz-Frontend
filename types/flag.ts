@@ -24,7 +24,7 @@ export interface FlagReason {
 export interface SendFlagRequest {
   questionId: string;
   reasons: string[];
-  userId: string | null;
+  sessionId: string | null;
   comment: string | null;
 }
 

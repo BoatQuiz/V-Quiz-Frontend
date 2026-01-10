@@ -9,7 +9,7 @@ import { PrimaryButton } from "../../components/ui/buttons/PrimaryButton";
 import { useQuiz } from "../../context/quizContext";
 
 export default function Flagpage() {
-    const { currentQuestion } = useQuiz();
+    const { currentQuestion, session } = useQuiz();
     const [loading, setLoading] = useState(false);
     const [reason, setReason] = useState<FlagReason[]>([]);
     const [selectReason, setSelectReason] = useState<string[]>([]);
@@ -38,7 +38,7 @@ export default function Flagpage() {
         setLoading(true);
         await SendFlag({
             questionId: currentQuestion?.id,
-            userId: null,
+            sessionId: session?.id || null,
             comment: comment || null,
             reasons: selectReason,
         });
