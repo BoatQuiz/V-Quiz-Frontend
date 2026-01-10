@@ -15,47 +15,57 @@ export function QuestionCard({
 }: QuestionCardProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
-  const locked = selectedIndex !== null; //Lås efter första klicket
+  const locked = selectedIndex !== null;
+  const showResult = selectedIndex !== null && correctIndex !== null;
 
   return (
-    <section className="space-y-3">
-      <p className="font-medium text-gray-900 text-center">{question}</p>
+    <section className="space-y-4">
+      {/* Question panel */}
+      <div className="rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 sm:px-5 sm:py-4">
+        <p className="text-center text-sm sm:text-base font-semibold text-gray-900 leading-relaxed">
+          {question}
+        </p>
+        
+      </div>
 
-      <div className="space-y-3 mt-4">
+      {/* Options */}
+      <div className="space-y-2 sm:space-y-3">
         {options.map((option, index) => {
           const isSelected = selectedIndex === index;
           const isCorrect = correctIndex !== null && index === correctIndex;
 
-          const baseClasses =
-            "w-full rounded-2xl border px-4 py-3 text-center text-sm font-medium bg-white transition transform";
+          const base =
+          "w-full rounded-2xl border px-4 py-3 sm:py-4 text-left text-sm sm:text-base font-medium bg-white shadow-sm transition active:scale-[0.99]";
 
-          let stateClasses = " border-gray-200 hover:bg-slate-50";
 
-          // När användaren valt något (då har vi selectedIndex)
-          if (selectedIndex !== null && correctIndex !== null) {
+          let state = "border-gray-200 hover:border-gray-300 hover:bg-gray-50";
+
+          if (showResult) {
             if (isSelected && isCorrect) {
-              stateClasses = " border-green-500 bg-green-50 scale-[1.02]";
+              state = "border-emerald-400 bg-emerald-50";
             } else if (isSelected && !isCorrect) {
-              stateClasses = " border-red-500 bg-red-50 scale-[1.02]";
+              state = "border-rose-400 bg-rose-50";
             } else if (!isSelected && isCorrect) {
-              stateClasses = " border-green-300 bg-green-50/40";
+              state = "border-emerald-200 bg-emerald-50/40";
             } else {
-              stateClasses = " border-gray-200 bg-white opacity-80";
+              state = "border-gray-100 bg-white opacity-80";
             }
           }
+
 
           return (
             <button
               key={`${index}-${option}`}
               type="button"
-              disabled={locked} // lås efter första klicket
+              disabled={locked}
               onClick={() => {
                 setSelectedIndex(index);
-                onAnswer(index); // Skickar till API
+                onAnswer(index);
               }}
-              className={baseClasses + stateClasses}
+              className={`${base} ${state} ${locked ? "cursor-default" : ""}`}
             >
-              {option}
+              <span className="text-gray-900">{option}</span>
+              
             </button>
           );
         })}
