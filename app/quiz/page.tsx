@@ -61,7 +61,7 @@ export default function QuizPage() {
 
         // Denna delen skicka vidare till en avsluts sida
         if (session) {
-            if (session?.numUsedQuestions == 10) {
+            if (session?.numUsedQuestions == 9) {
                 router.push("/quiz/complete");
             }
         }
