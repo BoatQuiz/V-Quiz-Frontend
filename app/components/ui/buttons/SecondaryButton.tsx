@@ -16,7 +16,8 @@ export function SecondaryButton({
         <button
             {...props}
             className={
-                "rounded-xl border border-gray-300 text-gray-700 font-medium flex items-center justify-center hover:bg-gray-100 active:translate-y-px transition " + className
+                "rounded-xl border border-gray-300 text-gray-700 font-medium flex items-center justify-center hover:bg-gray-100 active:translate-y-px transition " +
+                className
             }>
             {children}
         </button>
