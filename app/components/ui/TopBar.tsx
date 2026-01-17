@@ -5,6 +5,7 @@ import { LogoutButton } from "./buttons/LogoutButton";
 
 export default function TopBar() {
     const { session, username } = useQuiz();
+    console.log(session)
     return (
         <div className="bg-white-Card-background border border-gray-Card-background p-2.5 rounded-xl flex flex-col gap-2.5">
             <div className="flex items-start justify-between gap-2">

@@ -7,7 +7,7 @@ export interface ApiQuestion {
 export interface ApiSession {
     SessionId: string;
     Score: number;
-    NumUsedQuestions: number;
+    QuestionsAnswered: number;
 }
 
 export interface ApiSessionRequest {
