@@ -35,7 +35,7 @@ export default function QuizPage() {
                 setSession({
                     id: response.Data.Session.SessionId,
                     score: response.Data.Session.Score,
-                    numUsedQuestions: response.Data.Session.NumUsedQuestions,
+                    numUsedQuestions: response.Data.Session.QuestionsAnswered,
                 });
                 setCurrentQuestion({
                     id: response.Data.Question.QuestionId,
@@ -70,12 +70,6 @@ export default function QuizPage() {
 
         if (!result?.Success || !result?.Data) return;
 
-        setSession({
-            id: result.Data.Session.SessionId,
-            score: result.Data.Session.Score,
-            numUsedQuestions: result.Data.Session.NumUsedQuestions,
-        });
-
         setCurrentQuestion({
             id: result.Data.Question.QuestionId,
             text: result.Data.Question.QuestionText,
@@ -96,6 +90,14 @@ export default function QuizPage() {
 
         const result = await SubmitAnswerAction(payload);
         console.log("SubmitAnswer response:", result);
+        
+        if (!result.Success || !result.Data) return;
+
+        setSession({
+            ...session,
+            score: result.Data.Score,
+            numUsedQuestions: result.Data.QuestionsAnswered
+        })
 
         const apiCorrectIndex = result?.Data?.CorrectIndex;
 
