@@ -1,6 +1,6 @@
 const API_BASE_URL =
-    //"https://v-quiz-func-f4hgg0d0bkd0azdp.swedencentral-01.azurewebsites.net/api";
-    "http://localhost:7240/api"
+    "https://v-quiz-func-f4hgg0d0bkd0azdp.swedencentral-01.azurewebsites.net/api";
+    //"http://localhost:7240/api"
 
 export async function apiFetch<TResponse>(
     endpoint: string,
