@@ -6,7 +6,7 @@ export function LogoutButton({ className = "" }) {
 
     return (
         <SecondaryButton onClick={logout} className={className}>
-            Logga ut
+            Log out
         </SecondaryButton>
     );
 }
