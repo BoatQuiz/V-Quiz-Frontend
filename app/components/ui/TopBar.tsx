@@ -2,6 +2,7 @@
 
 import { useQuiz } from "@/app/context/quizContext";
 import { LogoutButton } from "./buttons/LogoutButton";
+import { LoginButton } from "./buttons/LoginButton";
 
 export default function TopBar() {
     const { session, username } = useQuiz();
@@ -17,7 +18,8 @@ export default function TopBar() {
                         Good work keep it going!
                     </p>
                 </div>
-                {username && <LogoutButton className="px-3 h-8 text-xs" />}
+                {username ? <LogoutButton className="px-3 h-8 text-xs" /> : <LoginButton className="px-3 h-8 text-xs"/>}
+                
             </div>
             <div className="flex gap-2.5 justify-center">
                 <div className="bg-gray-Page-background border border-gray-Card-background rounded-lg text-center p-2.5 flex-1">
@@ -39,7 +41,7 @@ export default function TopBar() {
                 </div> */}
                 <div className="bg-gray-Page-background border border-gray-Card-background rounded-lg text-center p-2.5 flex-1">
                     <h2 className="font-extrabold text-blue-Primary-button text-base">
-                        {session?.score}
+                        {session?.score ?? 0}
                     </h2>
                     <p className="font-normal text-xs text-gray-Body-text">
                         Correct Answers
