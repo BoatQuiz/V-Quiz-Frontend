@@ -33,7 +33,11 @@ export async function Login(data: {
     (await cookies()).set(
         "user_identity",
         JSON.stringify({ userId: Id, username: Username }),
-        { path: "/" }
+        { path: "/",
+            httpOnly: true,
+            sameSite: "lax",
+            secure: false
+         }
     );
     redirect("/quiz");
 }

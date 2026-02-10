@@ -52,3 +52,8 @@ export type AudienceMetaData = {
 export type MetaData = {
     Audiences: AudienceMetaData[];
 }
+
+export type QuizProfile = {
+    Audience: string;
+    Categories: string[];
+}
