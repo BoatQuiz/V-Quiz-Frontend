@@ -43,3 +43,12 @@ export interface SubmitAnswerData {
 }
 
 export type SubmitAnswerResponse = ApiResponse<SubmitAnswerData>;
+
+export type AudienceMetaData = {
+    Name: string;
+    Categories: string[];
+}
+
+export type MetaData = {
+    Audiences: AudienceMetaData[];
+}
