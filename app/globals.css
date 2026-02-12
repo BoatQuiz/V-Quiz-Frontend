@@ -7,6 +7,16 @@
   --foreground: #171717;
 }
 
+@layer components {
+  .app-container {
+    @apply bg-white-Card-background border border-gray-Card-background p-2.5 rounded-xl flex flex-col gap-2.5
+  }
+
+  .card {
+    @apply bg-gray-Page-background border border-gray-Card-background rounded-lg text-center p-2.5 flex-1
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

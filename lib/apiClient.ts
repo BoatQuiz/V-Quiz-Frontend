@@ -2,8 +2,8 @@ import { cookies } from "next/headers";
 
 const API_BASE_URL =
     "https://v-quiz-func-f4hgg0d0bkd0azdp.swedencentral-01.azurewebsites.net";
-    //"http://localhost:7240/api"
-    //"/api";
+    //"http://localhost:7240";
+//"/api";
 
 //  async function getBaseUrl() {
 //     // körs i browser
@@ -14,21 +14,20 @@ const API_BASE_URL =
 //     //Körs på server
 //     const h = await headers()
 //     const host = h.get("host");
-    
 
 //     return `http://${host}`
 // }
 
 export async function apiFetch<TResponse>(
     endpoint: string,
-    options?: RequestInit,
+    options?: Omit<RequestInit, "body"> & { body?: unknown}
 ): Promise<TResponse> {
-    const baseUrl = await API_BASE_URL;
+    const baseUrl = API_BASE_URL;
     const cookieHeader = (await cookies()).toString();
 
     const res = await fetch(`${baseUrl}/api${endpoint}`, {
         ...options,
-        
+        body: options?.body ? JSON.stringify(options.body) : undefined,
         headers: {
             "Content-Type": "application/json",
             Cookie: cookieHeader,
