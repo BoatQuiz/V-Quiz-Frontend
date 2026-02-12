@@ -11,6 +11,6 @@ export async function SubmitAnswerAction(
 ): Promise<SubmitAnswerResponse> {
     return apiFetch<SubmitAnswerResponse>("/quiz/submitAnswer", {
         method: "POST",
-        body: JSON.stringify(payload),
+        body: payload,
     });
 }
