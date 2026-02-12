@@ -8,6 +8,6 @@ export async function GetNextQuestion(
 ): Promise<QuizResponse> {
     return apiFetch<QuizResponse>("/quiz/getNextQuestion", {
         method: "POST",
-        body: JSON.stringify(payload),
+        body: payload,
     });
 }

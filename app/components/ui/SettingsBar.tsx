@@ -1,7 +1,12 @@
 import { Settings, BarChart3 } from "lucide-react";
+import { cookies } from "next/headers";
 import Link from "next/link";
 
-export default function SettingsBar() {
+export default async function SettingsBar() {
+    const cookieStore = await cookies();
+    const userCookie =  cookieStore.get("user_identity");
+
+    const isLoggedIn = !!userCookie;
     return (
         <div className="app-container flex-row justify-between">
             <div className="flex-1 text-center font-bold text-2xl">V-Quiz</div>
@@ -9,11 +14,13 @@ export default function SettingsBar() {
             {/* <div className='flex items-center'>
         <BarChart3 />
         </div> */}
-            <div className="flex items-center">
-                <Link href="/user">
-                    <Settings />
-                </Link>
-            </div>
+            {isLoggedIn && (
+                <div className="flex items-center">
+                    <Link href="/user">
+                        <Settings />
+                    </Link>
+                </div>
+            )}
         </div>
     );
 }

@@ -12,12 +12,9 @@ export async function Login(data: {
 }): Promise<LoginResult> {
     const response = await apiFetch<ApiResponse<LoginUserDto>>("/user/login", {
         method: "POST",
-        body: JSON.stringify({
+        body: {
             Username: data.username,
             Password: data.password,
-        }),
-        headers: {
-            "Content-Type": "application/json",
         },
     });
 
