@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { MetaDataSelector } from "./MetaDataSelector";
 import { SaveUser } from "../ui/buttons/SaveUser";
 import { PostUserProfile } from "@/app/actions/PostUserProfile";
+import { useRouter } from "next/navigation";
 
 export function QuizSetup() {
     const [profile, setProfile] = useState<QuizProfile | null>(null);
@@ -16,6 +17,7 @@ export function QuizSetup() {
         null,
     );
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+    const router=useRouter();
 
     useEffect(() => {
         GetQuizProfile().then((p) => {
@@ -44,7 +46,8 @@ export function QuizSetup() {
         };
 
         await PostUserProfile(payload)
-        console.log(payload);
+        router.push("/quiz");
+        
     };
     return (
         <div>
@@ -64,7 +67,7 @@ export function QuizSetup() {
                     )
                 }
             />
-            <SaveUser onClick={handleSave} />
+            <SaveUser onClick={handleSave} className="mt-2"/>
         </div>
     );
 }

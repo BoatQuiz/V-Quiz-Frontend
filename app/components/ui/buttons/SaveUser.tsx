@@ -1,12 +1,10 @@
 import { SaveUserProps } from "@/types/userType";
-import { SecondaryButton } from "./SecondaryButton";
-
-
+import { PrimaryButton } from "./PrimaryButton";
 
 export function SaveUser({ onClick, className=""}: SaveUserProps) {
   return (
-    <SecondaryButton className={className} onClick={onClick}>
+    <PrimaryButton className={className} onClick={onClick}>
         Save user preferens
-    </SecondaryButton>
+    </PrimaryButton>
   )
 }
