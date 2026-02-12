@@ -9,10 +9,10 @@ export async function RegisterUser(data: { username: string, password: string}):
 
     const response = await apiFetch<ApiResponse<RegisterUserDto>>("/user/register", {
         method: "POST",
-        body: JSON.stringify({
+        body: {
             Username: data.username,
             Password: data.password
-        }),
+        },
         headers: {
             "Content-Type": "application/json"
         }
