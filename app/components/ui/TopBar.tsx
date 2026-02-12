@@ -8,7 +8,7 @@ export default function TopBar() {
     const { session, username } = useQuiz();
     console.log(session)
     return (
-        <div className="bg-white-Card-background border border-gray-Card-background p-2.5 rounded-xl flex flex-col gap-2.5">
+        <div className="app-container">
             <div className="flex items-start justify-between gap-2">
                 <div>
                     <h1 className="font-bold text-sm text-gray-Heading-text">
@@ -22,7 +22,7 @@ export default function TopBar() {
                 
             </div>
             <div className="flex gap-2.5 justify-center">
-                <div className="bg-gray-Page-background border border-gray-Card-background rounded-lg text-center p-2.5 flex-1">
+                <div className="card">
                     <h2 className="font-extrabold text-blue-Primary-button text-base">
                         {session?.numUsedQuestions}
                     </h2>
@@ -39,7 +39,7 @@ export default function TopBar() {
                         Average Score
                     </p>
                 </div> */}
-                <div className="bg-gray-Page-background border border-gray-Card-background rounded-lg text-center p-2.5 flex-1">
+                <div className="card">
                     <h2 className="font-extrabold text-blue-Primary-button text-base">
                         {session?.score ?? 0}
                     </h2>

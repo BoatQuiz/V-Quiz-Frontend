@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 
 const API_BASE_URL =
     "https://v-quiz-func-f4hgg0d0bkd0azdp.swedencentral-01.azurewebsites.net";
-    //"http://localhost:7240/api"
+    //"http://localhost:7240"
     //"/api";
 
 //  async function getBaseUrl() {
@@ -23,7 +23,7 @@ export async function apiFetch<TResponse>(
     endpoint: string,
     options?: RequestInit,
 ): Promise<TResponse> {
-    const baseUrl = await API_BASE_URL;
+    const baseUrl = API_BASE_URL;
     const cookieHeader = (await cookies()).toString();
 
     const res = await fetch(`${baseUrl}/api${endpoint}`, {
