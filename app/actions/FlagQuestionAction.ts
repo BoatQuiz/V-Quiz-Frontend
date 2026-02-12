@@ -8,6 +8,6 @@ export async function FlagQuestion(
 ): Promise<FlagResponse> {
     return apiFetch<FlagResponse>("/flag/question", {
         method: "POST",
-        body: JSON.stringify(payload),
+        body: payload,
     });
 }
