@@ -6,7 +6,6 @@ import { LoginButton } from "./buttons/LoginButton";
 
 export default function TopBar() {
     const { session, username } = useQuiz();
-    console.log(session)
     return (
         <div className="app-container">
             <div className="flex items-start justify-between gap-2">
