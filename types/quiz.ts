@@ -2,6 +2,7 @@ export interface ApiQuestion {
     QuestionId: string;
     QuestionText: string;
     Options: string[];
+    TimeLimitMs?: number;
 }
 
 export interface ApiSession {
