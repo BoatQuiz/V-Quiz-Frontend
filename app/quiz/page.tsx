@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { TimeBar } from "../components/quiz/TimeBar";
 import { QuestionCard } from "../components/quiz/QuestionCard";
 import { StartQuizAction } from "../actions/StartQuizAction";
 import type { ApiQuestion, QuizResponse } from "@/types/quiz";
@@ -115,7 +116,9 @@ export default function QuizPage() {
       }, 1200);
     }
   }
-
+      function handleTimeUp() {
+        handleAnswer(-1);
+}
   return (
     <section className="app-container max-w-xl mx-auto">
 
@@ -134,13 +137,21 @@ export default function QuizPage() {
       {error && <p className="text-sm text-red-600 text-center">{error}</p>}
 
       {!loading && !error && question && (
-        <QuestionCard
-          key={question.QuestionId}
-          question={question.QuestionText}
-          options={question.Options}
-          correctIndex={correctIndex}
-          onAnswer={handleAnswer}
+          <>
+        <TimeBar 
+             key={`timer-${question.QuestionId}`}
+            duration={question.TimeLimitMs ?? 30000}
+            onTimeUp={handleTimeUp}
+            isRunning={correctIndex === null}
         />
+       <QuestionCard
+            key={`card-${question.QuestionId}`}
+            question={question.QuestionText}
+            options={question.Options}
+            correctIndex={correctIndex}
+            onAnswer={handleAnswer}
+        />
+        </>
       )}
     </section>
   );
