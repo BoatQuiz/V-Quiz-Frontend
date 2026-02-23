@@ -5,7 +5,7 @@ import { useQuiz } from "@/app/context/quizContext";
 import { Summary } from "@/types/summary";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { set } from "react-hook-form";
+
 
 export default function CompletePage() {
   const router = useRouter();
@@ -20,38 +20,63 @@ export default function CompletePage() {
       const data = await GetSessionSummary(
         session?.id ?? "",
       );
-    //   const data = await GetSessionSummary(
-    //     "f6d84fe4-da0a-4534-92a3-55f771538d0f",
-    //   );
       console.log("Session Summary:", data);
       setSummary(data);
     }
     fetchSummary();
-  }, []);
+  }, [session]);
 
   return (
-    <div>
-      <div className="border p-2.5 border-gray-Card-background bg-white-Card-background rounded-xl text-center mb-2.5">
-        <p className="font-bold">Thank you {username}</p>
-        <p className="font-medium">Your score is</p>
-        <p className="text-blue-Primary-button font-extrabold">
-          {session?.score ?? 0} av 10
-        </p>
-        <p>{summary?.Audience} Test</p>
-        <p>{summary?.TotalQuestions} Questions</p>
-        <p>
-          {summary?.Categories.map((category) => (
-            <div>
-              <p>{category.Category}</p>
-              <p>
-                {category.Correct}/{category.Total}
-              </p>
-              <p>{category.Percent}%</p>
-            </div>
-          ))}
+  <div className="max-w-xl mx-auto space-y-4">
+    {/* Main Summary Card */}
+    <div className="bg-white-Card-background border border-gray-Card-background rounded-2xl p-6 text-center shadow-sm space-y-3">
+
+      <p className="text-lg font-semibold">
+        Thank you {username}
+      </p>
+
+      <div>
+        <p className="text-sm text-gray-500">Your score in {summary?.Audience ?? "this session"}</p>
+        <p className="text-4xl font-extrabold text-blue-Primary-button">
+          {session?.score ?? 0} / 10
         </p>
       </div>
-      <PrimaryButton onClick={handleStart}>Back to game</PrimaryButton>
     </div>
-  );
+
+    {/* Category Breakdown */}
+    {summary && (
+      <div className="grid gap-3">
+        {summary.Categories.map((category) => (
+          <div
+            key={category.Category}
+            className="bg-white-Card-background border border-gray-Card-background rounded-xl p-4 shadow-sm"
+          >
+            <div className="flex justify-between items-center mb-2">
+              <p className="font-semibold">{category.Category}</p>
+              <p className="text-sm text-gray-600">
+                {category.Correct}/{category.Total}
+              </p>
+            </div>
+
+            {/* Progress Bar */}
+            <div className="w-full bg-gray-200 rounded-full h-2">
+              <div
+                className="bg-blue-Primary-button h-2 rounded-full transition-all"
+                style={{ width: `${category.Percent}%` }}
+              />
+            </div>
+
+            <p className="text-right text-xs text-gray-500 mt-1">
+              {category.Percent}%
+            </p>
+          </div>
+        ))}
+      </div>
+    )}
+
+    <PrimaryButton onClick={handleStart}>
+      Back to game
+    </PrimaryButton>
+  </div>
+);
 }
