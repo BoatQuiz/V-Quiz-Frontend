@@ -15,7 +15,7 @@ export default function HomePage() {
         Frågesport för vetting och säkerhet inom sjöfart.
       </p>
 
-      <div className="w-full">
+      <div className="w-full max-w-sm">
         <PrimaryButton onClick={handleStart}>Start game</PrimaryButton>
       </div>
       <Link
