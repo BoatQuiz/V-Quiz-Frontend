@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 // Define the props that the TimeBar component expects
 type TimeBarProps = {
@@ -13,64 +13,55 @@ export function TimeBar({ duration, onTimeUp, isRunning }: TimeBarProps) {
   // It is initialized with the full duration
   const [timeLeft, setTimeLeft] = useState(duration);
 
-  // This effect starts the countdown when isRunning becomes true
+  // Ref to remember when the timer started, WITHOUT triggering re-renders when it changes
+  const startTimeRef = useRef<number | null>(null);
+
   useEffect(() => {
+    if (!isRunning || startTimeRef.current === null) return;
 
-    // If the timer is not running, exit early
-    if (!isRunning) return;
-
-    // Create an interval that runs every 100 milliseconds
     const interval = setInterval(() => {
-
-      // Decrease timeLeft by 100ms each tick
-      setTimeLeft(prev => prev - 100);
-
+      const elapsed = Date.now() - startTimeRef.current!;
+      const remaining = duration - elapsed;
+      setTimeLeft(remaining > 0 ? remaining : 0);
     }, 100);
 
-    // Cleanup function:
-    // This clears the interval when:
-    // - the component unmounts
-    // - isRunning changes
     return () => clearInterval(interval);
+  }, [isRunning, duration]);
 
-  }, [isRunning]); // Re-run this effect whenever isRunning changes
-
-
-  // This effect checks if time has run out
   useEffect(() => {
+    if (isRunning) {
+      startTimeRef.current = Date.now();
+    }
+  }, [isRunning]);
 
-    // When timeLeft reaches 0 or below,
-    // trigger the onTimeUp callback
+  useEffect(() => {
     if (timeLeft <= 0) {
       onTimeUp();
     }
+  }, [timeLeft, onTimeUp]);
 
-  }, [timeLeft, onTimeUp]); // Runs whenever timeLeft changes
-
-
-  // This effect resets the timer whenever duration changes
   useEffect(() => {
-
-    // Reset timeLeft to the new duration value
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTimeLeft(duration);
+    startTimeRef.current = Date.now();
+  }, [duration]);
 
-  }, [duration]); // Runs whenever duration prop changes
-  
-    const percent = (timeLeft / duration) * 100;    
-    const barColor = percent > 50 
+  const percent = (timeLeft / duration) * 100;
+  const barColor = percent > 50
     ? "bg-emerald-400"
-    : percent > 20 
+    : percent > 20
     ? "bg-yellow-400"
-    : "bg-rose-400"; 
+    : "bg-rose-400";
 
- return (
+  return (
     <div className="app-container">
-        
-        <div className="w-full bg-gray-200 rounded-full h-2">
-            <div 
-                className={`h-2 rounded-full ${barColor}`}
-                style={{ width: `${percent}%` }}
-            />
-        </div>
+
+      <div className="w-full bg-gray-200 rounded-full h-2">
+        <div
+          className={`h-2 rounded-full ${barColor}`}
+          style={{ width: `${percent}%` }}
+        />
+      </div>
     </div>
-);}
+  );
+}
