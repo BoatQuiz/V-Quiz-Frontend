@@ -1,5 +1,7 @@
 "use client";
 
+import { ApiQuestion } from "@/types/quiz";
+import type { QuizContextType, QuizSession } from "@/types/context";
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useState } from "react";
 
@@ -18,7 +20,9 @@ export function QuizProvider({
 
     const [session, setSession] = useState<QuizSession | null>(null);
     const [currentQuestion, setCurrentQuestion] =
-        useState<QuizQuestionMeta | null>(null);
+        useState<ApiQuestion | null>(null);
+    const [questionStartTime, setQuestionStartTime] =
+        useState<number | null>(null);
     const [userId, setUserId] = useState<string | null>(initialUserId);
     const [username, setUsername] = useState<string|null>(initialUsername);
 
@@ -27,6 +31,7 @@ export function QuizProvider({
         
         setSession(null);
         setCurrentQuestion(null);
+        setQuestionStartTime(null);
         setUserId(null)
         setUsername(null)
 
@@ -42,6 +47,8 @@ export function QuizProvider({
                 setSession,
                 currentQuestion,
                 setCurrentQuestion,
+                questionStartTime,
+                setQuestionStartTime,
                 userId,
                 setUserId,
                 username,

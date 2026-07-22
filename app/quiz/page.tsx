@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { TimeBar } from "../components/quiz/TimeBar";
 import { QuestionCard } from "../components/quiz/QuestionCard";
 import { StartQuizAction } from "../actions/StartQuizAction";
-import type { ApiQuestion, QuizResponse } from "@/types/quiz";
+import type { QuizResponse } from "@/types/quiz";
 import { useQuiz } from "../context/quizContext";
 import Link from "next/link";
 import { SubmitAnswerAction } from "../actions/SubmitAnswerAction";
@@ -12,24 +12,26 @@ import { GetNextQuestion } from "../actions/GetNextQuestionAction";
 import { useRouter } from "next/navigation";
 
 export default function QuizPage() {
-  // Här sparar vi nuvarande fråga från API:t
-  const [question, setQuestion] = useState<ApiQuestion | null>(null);
-  const { session, setSession, setCurrentQuestion, userId } = useQuiz();
+  // Frågan kommer nu från context, ingen egen lokal "question" längre
+  const { session, setSession, currentQuestion, setCurrentQuestion, questionStartTime, setQuestionStartTime, userId } = useQuiz();
 
-  // State för laddning / fel
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [correctIndex, setCorrectIndex] = useState<number | null>(null);
 
-  // Router
   const router = useRouter();
 
   useEffect(() => {
     async function load() {
+      // Prevents getting new question when a session is active
+      if (session) {
+        setLoading(false);
+        return;
+      }
+
       const payload = { UserId: userId };
       try {
         const response: QuizResponse = await StartQuizAction(payload);
-        console.log("StartQuizAction response:", response);
 
         if (!response.Success || !response.Data) {
           throw new Error(response.Message ?? "Okänt fel");
@@ -41,13 +43,9 @@ export default function QuizPage() {
           numUsedQuestions: response.Data.Session.QuestionsAnswered,
         });
 
-        setCurrentQuestion({
-          id: response.Data.Question.QuestionId,
-          text: response.Data.Question.QuestionText,
-        });
-
-        // Plocka ut själva frågan från svaret
-        setQuestion(response.Data.Question);
+        // Bara EN gång, hela frågan sparas i context
+        setCurrentQuestion(response.Data.Question);
+        setQuestionStartTime(Date.now());
         setCorrectIndex(null);
       } catch (err) {
         console.error("Error loading quiz question", err);
@@ -58,12 +56,11 @@ export default function QuizPage() {
     }
 
     load();
-  }, [setSession, setCurrentQuestion, userId]);
+  }, [setSession, setCurrentQuestion, userId, session]);
 
   async function loadNextQuestion(sessionId: string) {
     const payload = { SessionId: sessionId };
 
-    // Denna delen skicka vidare till en avsluts sida
     if (session) {
       if (session?.numUsedQuestions == 9) {
         router.push("/quiz/complete");
@@ -71,31 +68,25 @@ export default function QuizPage() {
     }
 
     const result = await GetNextQuestion(payload);
-    console.log("GetNextQuestion response:", result);
 
     if (!result?.Success || !result?.Data) return;
 
-    setCurrentQuestion({
-      id: result.Data.Question.QuestionId,
-      text: result.Data.Question.QuestionText,
-    });
-
-    setQuestion(result.Data.Question);
+    setCurrentQuestion(result.Data.Question);
+    setQuestionStartTime(Date.now());
     setCorrectIndex(null);
   }
 
   async function handleAnswer(selectedIndex: number) {
-    if (!question || !session) return;
+    if (!currentQuestion || !session) return;
     if (correctIndex !== null) return;
 
     const payload = {
       sessionId: session.id,
-      questionId: question.QuestionId,
+      questionId: currentQuestion.QuestionId,
       selectedAnswer: selectedIndex,
     };
 
     const result = await SubmitAnswerAction(payload);
-    console.log("SubmitAnswer response:", result);
 
     if (!result.Success || !result.Data) return;
 
@@ -109,19 +100,19 @@ export default function QuizPage() {
 
     if (typeof apiCorrectIndex === "number") {
       setCorrectIndex(apiCorrectIndex);
-
       const sessionId = session.id;
       setTimeout(() => {
         loadNextQuestion(sessionId);
       }, 1200);
     }
   }
-      function handleTimeUp() {
-        handleAnswer(-1);
-}
+
+  function handleTimeUp() {
+    handleAnswer(-1);
+  }
+
   return (
     <section className="app-container max-w-xl mx-auto">
-
       <div className="grid grid-cols-[24px_1fr_24px] items-center">
         <div />
         <h1 className="text-xl font-semibold text-center">Quiz</h1>
@@ -136,21 +127,22 @@ export default function QuizPage() {
 
       {error && <p className="text-sm text-red-600 text-center">{error}</p>}
 
-      {!loading && !error && question && (
-          <>
-        <TimeBar 
-             key={`timer-${question.QuestionId}`}
-            duration={question.TimeLimitMs ?? 30000}
+      {!loading && !error && currentQuestion && (
+        <>
+          <TimeBar
+            key={`timer-${currentQuestion.QuestionId}`}
+            duration={currentQuestion.TimeLimitMs ?? 30000}
             onTimeUp={handleTimeUp}
             isRunning={correctIndex === null}
-        />
-       <QuestionCard
-            key={`card-${question.QuestionId}`}
-            question={question.QuestionText}
-            options={question.Options}
+            startTime={questionStartTime}
+          />
+          <QuestionCard
+            key={`card-${currentQuestion.QuestionId}`}
+            question={currentQuestion.QuestionText}
+            options={currentQuestion.Options}
             correctIndex={correctIndex}
             onAnswer={handleAnswer}
-        />
+          />
         </>
       )}
     </section>

@@ -1,20 +1,20 @@
-type QuizSession = {
+import { ApiQuestion } from "./quiz";
+
+export type QuizSession = {
     id: string;
     score: number;
     numUsedQuestions: number;
 };
 
-type QuizQuestionMeta = {
-    id: string;
-    text: string;
-};
-
-type QuizContextType = {
+export type QuizContextType = {
     session: QuizSession | null;
     setSession: (s: QuizSession | null) => void;
 
-    currentQuestion: QuizQuestionMeta | null;
-    setCurrentQuestion: (p: QuizQuestionMeta | null) => void;
+    currentQuestion: ApiQuestion | null;
+    setCurrentQuestion: (p: ApiQuestion | null) => void;
+
+    questionStartTime : number | null;
+    setQuestionStartTime: (t: number | null) => void;
 
     userId: string | null;
     setUserId: (id: string | null) => void;
