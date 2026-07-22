@@ -37,7 +37,7 @@ export default function Flagpage() {
         }
         setLoading(true);
         await SendFlag({
-            questionId: currentQuestion?.id,
+            questionId: currentQuestion?.QuestionId,
             sessionId: session?.id || null,
             comment: comment || null,
             reasons: selectReason,
@@ -51,7 +51,7 @@ export default function Flagpage() {
         <div>
             <div className="border bg-white-Card-background border-gray-Card-background rounded-xl p-2.5 flex flex-col gap-2.5">
                 <div className="border p-2.5 rounded-lg border-gray-Card-background bg-gray-Page-background text-center font-medium text-sm ">
-                    <p>{currentQuestion?.text}</p>
+                    <p>{currentQuestion?.QuestionText}</p>
                 </div>
                 <div className="w-full flex justify-center border border-gray-Card-background rounded-xl bg-gray-Page-background">
                     <div className="p-2.5 rounded-lg text-center font-medium text-sm  flex flex-col items-start">

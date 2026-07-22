@@ -1,12 +1,12 @@
 import { ApiQuestion } from "./quiz";
 
-type QuizSession = {
+export type QuizSession = {
     id: string;
     score: number;
     numUsedQuestions: number;
 };
 
-type QuizContextType = {
+export type QuizContextType = {
     session: QuizSession | null;
     setSession: (s: QuizSession | null) => void;
 

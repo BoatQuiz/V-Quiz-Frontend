@@ -1,6 +1,7 @@
 "use client";
 
 import { ApiQuestion } from "@/types/quiz";
+import type { QuizContextType, QuizSession } from "@/types/context";
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useState } from "react";
 
