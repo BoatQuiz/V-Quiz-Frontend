@@ -13,7 +13,7 @@ export default async function QuizShell({ children }: { children: React.ReactNod
     <QuizProvider
     initialUserId={parsed?.userId ?? null}
     initialUsername={parsed?.username ?? null}>
-      <div className="bg-gray-Page-background p-2.5 flex flex-col gap-2.5">
+      <div className="min-h-screen bg-gray-Page-background p-2.5 flex flex-col gap-2.5">
         <SettingsBar/>
         <TopBar />
         <main>{children}</main>
