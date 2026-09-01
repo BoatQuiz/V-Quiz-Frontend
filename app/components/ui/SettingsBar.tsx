@@ -9,7 +9,9 @@ export default async function SettingsBar() {
     const isLoggedIn = !!userCookie;
     return (
         <div className="app-container flex-row justify-between">
-            <div className="flex-1 text-center font-bold text-2xl">V-Quiz</div>
+            <Link href="/" className="flex-1 text-center font-bold text-2xl hover:opacity-70">
+                V-Quiz
+            </Link>
             {/* Denna kan vi inkludera när det finns user stats */}
             {/* <div className='flex items-center'>
         <BarChart3 />
