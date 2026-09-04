@@ -15,6 +15,10 @@
   .card {
     @apply bg-gray-Page-background border border-gray-Card-background rounded-lg text-center p-2.5 flex-1
   }
+
+  .page-wrapper {
+    @apply min-h-screen bg-gray-Page-background px-4
+  }
 }
 
 @theme inline {

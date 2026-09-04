@@ -27,10 +27,10 @@ export default function LoginPage() {
       return;
     }
   }
-  return (
-    <div className="bg-white-Card-background flex flex-col text-center">
-      <div className="bg-gray-Card-background m-3 rounded-xl border border-gray-Input-border">
-        <form onSubmit={handleSubmit} className="flex flex-col p-3 gap-2.5">
+      return (
+        <div className="page-wrapper flex flex-col items-center justify-center text-center">
+          <div className="bg-gray-Card-background rounded-xl border border-gray-Input-border max-w-xl mx-auto w-full">
+            <form onSubmit={handleSubmit} className="flex flex-col p-8 pt-10 gap-4">
           <h1 className="font-bold text-2xl">Sign In</h1>
           <input
             type="text"
