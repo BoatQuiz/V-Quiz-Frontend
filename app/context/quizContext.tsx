@@ -2,7 +2,7 @@
 
 import { ApiQuestion } from "@/types/quiz";
 import type { QuizContextType, QuizSession } from "@/types/context";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { Logout } from "@/app/actions/LogoutAction";
 
 const QuizContext = createContext<QuizContextType | undefined>(undefined);
@@ -16,14 +16,20 @@ export function QuizProvider({
     initialUserId: string | null;
     initialUsername: string | null;
 }) {
-    
     const [session, setSession] = useState<QuizSession | null>(null);
     const [currentQuestion, setCurrentQuestion] =
         useState<ApiQuestion | null>(null);
     const [questionStartTime, setQuestionStartTime] =
         useState<number | null>(null);
     const [userId, setUserId] = useState<string | null>(initialUserId);
-    const [username, setUsername] = useState<string|null>(initialUsername);
+    const [username, setUsername] = useState<string | null>(initialUsername);
+
+    // Synka state med nya cookie-värden när servern skickar nya props
+    // (t.ex. efter inloggning/utloggning, tack vare revalidatePath).
+    useEffect(() => {
+        setUserId(initialUserId);
+        setUsername(initialUsername);
+    }, [initialUserId, initialUsername]);
 
     const logout = async () => {
         setSession(null);
@@ -34,7 +40,6 @@ export function QuizProvider({
 
         await Logout();
     };
-
 
     return (
         <QuizContext.Provider

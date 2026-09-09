@@ -3,6 +3,7 @@
 import { apiFetch } from "@/lib/apiClient";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import { revalidatePath } from "next/cache";
 import { ApiResponse } from "@/types/quiz";
 import { LoginResult, LoginUserDto } from "@/types/login";
 
@@ -36,5 +37,6 @@ export async function Login(data: {
             secure: false
          }
     );
+    revalidatePath("/", "layout");
     redirect("/quiz");
 }
