@@ -58,3 +58,13 @@ export type QuizProfile = {
     Audience: string;
     Categories: string[];
 }
+
+export type CategoryLevel = "Easy" | "Medium" | "Hard";
+
+export type CategoryStat = {
+    RecentAnswers: boolean[];
+    Percent: number;
+    Level: CategoryLevel;
+};
+
+export type CategoryStats = Record<string, Record<string, CategoryStat>>;
