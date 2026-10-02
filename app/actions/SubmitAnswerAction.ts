@@ -1,6 +1,7 @@
 "use server";
 
 import { apiFetch } from "@/lib/apiClient";
+import { revalidatePath } from "next/cache";
 import {
     SubmitAnswerRequest,
     SubmitAnswerResponse,
@@ -9,8 +10,14 @@ import {
 export async function SubmitAnswerAction(
     payload: SubmitAnswerRequest
 ): Promise<SubmitAnswerResponse> {
-    return apiFetch<SubmitAnswerResponse>("/quiz/submitAnswer", {
+    const result = await apiFetch<SubmitAnswerResponse>("/quiz/submitAnswer", {
         method: "POST",
         body: payload,
     });
+
+    if (result.Data?.IsLastQuestion) {
+        revalidatePath("/progress");
+    }
+
+    return result;
 }

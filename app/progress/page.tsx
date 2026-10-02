@@ -1,5 +1,6 @@
 import { GetCategoryStats } from "../actions/GetCategoryStats";
 import { CategoryStat } from "@/types/quiz";
+import SettingsBar from "../components/ui/SettingsBar";
 
 export default async function ProgressPage() {
     const stats = await GetCategoryStats();
@@ -7,16 +8,20 @@ export default async function ProgressPage() {
     const categories = stats["General"] ?? {};
 
     return (
-        <div className="page-wrapper pt-8">
-            <div className="app-container max-w-xl mx-auto">
-                <h1 className="font-bold text-xl text-center">My progress</h1>
-                <p className="text-sm text-gray-Body-text text-center">
-                    Based on your correct answers per category
-                </p>
+        <div className="page-wrapper pt-8 flex flex-col gap-2.5">
+            <div className="max-w-xl mx-auto w-full flex flex-col gap-2.5">
+                <SettingsBar />
 
-                {Object.entries(categories).map(([categoryName, stat]) => (
-                    <CategoryCard key={categoryName} name={categoryName} stat={stat} />
-                ))}
+                <div className="app-container">
+                    <h1 className="font-bold text-xl text-center">My progress</h1>
+                    <p className="text-sm text-gray-Body-text text-center">
+                        Based on your correct answers per category
+                    </p>
+
+                    {Object.entries(categories).map(([categoryName, stat]) => (
+                        <CategoryCard key={categoryName} name={categoryName} stat={stat} />
+                    ))}
+                </div>
             </div>
         </div>
     );
