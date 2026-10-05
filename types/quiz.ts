@@ -45,13 +45,31 @@ export interface SubmitAnswerData {
 
 export type SubmitAnswerResponse = ApiResponse<SubmitAnswerData>;
 
-export type AudienceMetaData = {
-    Name: string;
-    Categories: string[];
-}
 
 export type MetaData = {
     Audiences: AudienceMetaData[];
+}
+
+export type TopicMetaData = {
+    Name: string;
+    Count: number;
+}
+
+export type SubcategoryMetaData = {
+    Name: string;
+    Count: number;
+    Topics: TopicMetaData[];
+}
+
+export type CategoryMetaData = {
+    Name: string;
+    Count: number;
+    Subcategories: SubcategoryMetaData[];
+}
+
+export type AudienceMetaData = {
+    Name: string;
+    Categories: CategoryMetaData[];
 }
 
 export type QuizProfile = {
@@ -66,5 +84,16 @@ export type CategoryStat = {
     Percent: number;
     Level: CategoryLevel;
 };
+
+export type SubcategorySelection = {
+    Name: string;
+    Topics: string[];
+};
+
+export type CategorySelection = {
+    Name: string;
+    Subcategories: SubcategorySelection[];
+};
+
 
 export type CategoryStats = Record<string, Record<string, CategoryStat>>;
