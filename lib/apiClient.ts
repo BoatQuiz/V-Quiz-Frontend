@@ -1,8 +1,8 @@
 import { cookies } from "next/headers";
 
 const API_BASE_URL =
-    //"https://v-quiz-func-f4hgg0d0bkd0azdp.swedencentral-01.azurewebsites.net";
-    "http://localhost:7240";
+    "https://v-quiz-func-f4hgg0d0bkd0azdp.swedencentral-01.azurewebsites.net";
+    //"http://localhost:7240";
 //"/api";
 
 //  async function getBaseUrl() {
